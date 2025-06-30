@@ -1,13 +1,14 @@
 from PIL import Image
-def generateExtentionIcons(iconsinput_path, output_dir=".", sizes=(16, 48, 128)):
-    """
-    Resizes an input image to standard Chrome extension icon sizes.
+import os
 
-    Args:
-        input_path (str): Path to the source image (preferably 512x512 or similar).
-        output_dir (str): Folder where resized icons will be saved.
-        sizes (tuple): Icon sizes to generate (default: 16, 48, 128).
+def generate_extension_icons(input_path, output_dir=".", sizes=(16, 48, 128)):
+    icon = Image.open("C:\Users\meeth\OneDrive\Desktop\crome-extention").convert("RGBA")
+    output_paths = {}
 
-    Returns:
-        dict: Map of size to file path for each saved image.
-    """
+    for size in sizes:
+        resized = icon.resize((size, size), Image.LANCZOS)
+        output_path = os.path.join(output_dir, f"icon{size}.png")
+        resized.save(output_path, format="PNG")
+        output_paths[size] = output_path
+
+    return output_paths
